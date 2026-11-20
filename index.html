@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Information & Record System</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <h1>Student Information Portal</h1>
+          <p class="subtitle">Academic Records, Attendance, Family & Marks Management</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="load-sample-btn" class="btn btn-secondary" title="Populate with sample data to test">
+          <span class="icon">✨</span> Load Sample Data
+        </button>
+        <button id="export-csv-btn" class="btn btn-outline" title="Download all records as CSV">
+          <span class="icon">📥</span> Export CSV
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-layout">
+      <!-- Left Column: Form -->
+      <section class="form-section card">
+        <div class="card-header">
+          <h2 id="form-title">
+            <span class="step-num">➕</span> Add New Student Record
+          </h2>
+          <span id="edit-indicator" class="badge badge-warning hidden">Editing Mode</span>
+        </div>
+
+        <form id="student-form" novalidate>
+          <input type="hidden" id="student-id" />
+
+          <!-- Form Navigation Tabs -->
+          <div class="form-tabs">
+            <button type="button" class="tab-btn active" data-tab="tab-basic">1. Basic Info</button>
+            <button type="button" class="tab-btn" data-tab="tab-family">2. Family Details</button>
+            <button type="button" class="tab-btn" data-tab="tab-academics">3. Marks & Attendance</button>
+          </div>
+
+          <!-- Tab 1: Basic Information -->
+          <div class="tab-content active" id="tab-basic">
+            <h3 class="section-title">Student Personal Information</h3>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" placeholder="e.g. John Doe" required />
+                <span class="error-msg">Please enter student full name</span>
+              </div>
+
+              <div class="form-group">
+                <label for="rollNo">Roll / Registration No <span class="required">*</span></label>
+                <input type="text" id="rollNo" placeholder="e.g. 2026CS101" required />
+                <span class="error-msg">Unique Roll Number is required</span>
+              </div>
+
+              <div class="form-group">
+                <label for="dob">Date of Birth <span class="required">*</span></label>
+                <input type="date" id="dob" required />
+                <span class="error-msg">Please select date of birth</span>
+              </div>
+
+              <div class="form-group">
+                <label for="gender">Gender <span class="required">*</span></label>
+                <select id="gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Non-Binary">Non-Binary</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="error-msg">Please select gender</span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" placeholder="e.g. +1 555-019-2834" required />
+                <span class="error-msg">Valid phone number required</span>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" placeholder="e.g. john.doe@university.edu" required />
+                <span class="error-msg">Valid email address required</span>
+              </div>
+
+              <div class="form-group">
+                <label for="department">Department / Major <span class="required">*</span></label>
+                <select id="department" required>
+                  <option value="">Select Department</option>
+                  <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Electronics & Communication">Electronics & Communication</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Civil Engineering">Civil Engineering</option>
+                  <option value="Business Administration">Business Administration</option>
+                  <option value="Data Science & AI">Data Science & AI</option>
+                </select>
+                <span class="error-msg">Please choose a department</span>
+              </div>
+
+              <div class="form-group">
+                <label for="semester">Current Semester <span class="required">*</span></label>
+                <select id="semester" required>
+                  <option value="">Select Semester</option>
+                  <option value="Semester 1">Semester 1</option>
+                  <option value="Semester 2">Semester 2</option>
+                  <option value="Semester 3">Semester 3</option>
+                  <option value="Semester 4">Semester 4</option>
+                  <option value="Semester 5">Semester 5</option>
+                  <option value="Semester 6">Semester 6</option>
+                  <option value="Semester 7">Semester 7</option>
+                  <option value="Semester 8">Semester 8</option>
+                </select>
+                <span class="error-msg">Please select current semester</span>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <div></div>
+              <button type="button" class="btn btn-primary next-tab-btn" data-next="tab-family">
+                Next: Family Details →
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab 2: Family Details -->
+          <div class="tab-content" id="tab-family">
+            <h3 class="section-title">Parents & Guardian Details</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fatherName">Father's Name <span class="required">*</span></label>
+                <input type="text" id="fatherName" placeholder="Father's full name" required />
+                <span class="error-msg">Father's name is required</span>
+              </div>
+
+              <div class="form-group">
+                <label for="fatherContact">Father's Contact / Phone</label>
+                <input type="tel" id="fatherContact" placeholder="Contact number" />
+              </div>
+
+              <div class="form-group">
+                <label for="fatherOccupation">Father's Occupation</label>
+                <input type="text" id="fatherOccupation" placeholder="e.g. Engineer, Business" />
+              </div>
+
+              <div class="form-group">
+                <label for="motherName">Mother's Name <span class="required">*</span></label>
+                <input type="text" id="motherName" placeholder="Mother's full name" required />
+                <span class="error-msg">Mother's name is required</span>
+              </div>
+
+              <div class="form-group">
+                <label for="motherContact">Mother's Contact / Phone</label>
+                <input type="tel" id="motherContact" placeholder="Contact number" />
+              </div>
+
+              <div class="form-group">
+                <label for="motherOccupation">Mother's Occupation</label>
+                <input type="text" id="motherOccupation" placeholder="e.g. Teacher, Doctor, Homemaker" />
+              </div>
+
+              <div class="form-group">
+                <label for="guardianName">Guardian / Emergency Contact Name</label>
+                <input type="text" id="guardianName" placeholder="Guardian name (if applicable)" />
+              </div>
+
+              <div class="form-group">
+                <label for="guardianPhone">Emergency Phone <span class="required">*</span></label>
+                <input type="tel" id="guardianPhone" placeholder="Emergency contact number" required />
+                <span class="error-msg">Emergency phone is required</span>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="homeAddress">Permanent Residential Address <span class="required">*</span></label>
+                <textarea id="homeAddress" rows="2" placeholder="House/Flat No, Street, City, State, ZIP code" required></textarea>
+                <span class="error-msg">Address is required</span>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="btn btn-secondary prev-tab-btn" data-prev="tab-basic">
+                ← Back
+              </button>
+              <button type="button" class="btn btn-primary next-tab-btn" data-next="tab-academics">
+                Next: Marks & Attendance →
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab 3: Marks & Attendance -->
+          <div class="tab-content" id="tab-academics">
+            <h3 class="section-title">Attendance Tracking</h3>
+            <div class="attendance-card">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="totalClasses">Total Classes Scheduled</label>
+                  <input type="number" id="totalClasses" min="1" max="500" placeholder="e.g. 100" />
+                </div>
+                <div class="form-group">
+                  <label for="attendedClasses">Classes Attended</label>
+                  <input type="number" id="attendedClasses" min="0" max="500" placeholder="e.g. 85" />
+                </div>
+                <div class="form-group">
+                  <label for="attendancePercentage">Attendance Percentage (%) <span class="required">*</span></label>
+                  <div class="attendance-input-wrap">
+                    <input type="number" id="attendancePercentage" min="0" max="100" step="0.01" placeholder="85.00" required />
+                    <span id="attendanceBadge" class="status-pill status-good">Good (>75%)</span>
+                  </div>
+                  <span class="error-msg">Percentage must be between 0 and 100</span>
+                </div>
+              </div>
+              <small class="helper-text">💡 Tip: Enter total classes and classes attended to auto-calculate percentage, or type directly.</small>
+            </div>
+
+            <div class="marks-header-wrap">
+              <h3 class="section-title">Semester Subject Marks</h3>
+              <button type="button" id="add-subject-btn" class="btn btn-sm btn-outline">
+                + Add Subject
+              </button>
+            </div>
+
+            <div class="subjects-table-wrapper">
+              <table class="subjects-table">
+                <thead>
+                  <tr>
+                    <th>Subject Name</th>
+                    <th style="width: 100px;">Max Marks</th>
+                    <th style="width: 120px;">Marks Scored</th>
+                    <th style="width: 90px;">Grade</th>
+                    <th style="width: 50px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="subjects-container">
+                  <!-- Dynamic Subject Rows populated by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Marks Summary Box -->
+            <div class="marks-summary-card">
+              <div class="summary-metric">
+                <span class="label">Total Scored:</span>
+                <span class="value" id="summary-total-scored">0 / 0</span>
+              </div>
+              <div class="summary-metric">
+                <span class="label">Semester Average:</span>
+                <span class="value" id="summary-percentage">0.00%</span>
+              </div>
+              <div class="summary-metric">
+                <span class="label">Overall Standing:</span>
+                <span class="value badge-neutral" id="summary-standing">Not Calculated</span>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="btn btn-secondary prev-tab-btn" data-prev="tab-family">
+                ← Back
+              </button>
+              <div class="action-buttons">
+                <button type="button" id="cancel-edit-btn" class="btn btn-secondary hidden">
+                  Cancel Edit
+                </button>
+                <button type="submit" id="save-student-btn" class="btn btn-success">
+                  💾 Save Student Record
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Student Directory & Records -->
+      <section class="records-section card">
+        <div class="records-header">
+          <div>
+            <h2>📚 Registered Students (<span id="total-students-count">0</span>)</h2>
+            <p class="subtitle">Search, filter, inspect profiles, and manage records</p>
+          </div>
+          <button id="clear-all-btn" class="btn btn-sm btn-danger-outline" title="Delete all records">
+            Clear All
+          </button>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="filter-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Search by name, roll no, or email..." />
+          </div>
+          <select id="department-filter">
+            <option value="">All Departments</option>
+            <option value="Computer Science & Engineering">Computer Science</option>
+            <option value="Information Technology">Information Tech</option>
+            <option value="Electronics & Communication">Electronics</option>
+            <option value="Mechanical Engineering">Mechanical</option>
+            <option value="Civil Engineering">Civil</option>
+            <option value="Business Administration">Business</option>
+            <option value="Data Science & AI">Data Science & AI</option>
+          </select>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">📂</div>
+          <h3>No Student Records Yet</h3>
+          <p>Fill out the form on the left or click "Load Sample Data" to quickly preview how the app works.</p>
+        </div>
+
+        <!-- Student Cards List -->
+        <div id="student-cards-grid" class="cards-grid hidden"></div>
+      </section>
+    </main>
+
+    <!-- Student Details Modal -->
+    <div id="student-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-badge">Student Profile</span>
+            <h2 id="modal-student-name">Student Name</h2>
+            <p id="modal-student-roll" class="modal-subtitle">Roll No</p>
+          </div>
+          <button id="close-modal-btn" class="close-btn" aria-label="Close modal">&times;</button>
+        </div>
+
+        <div class="modal-body" id="modal-content">
+          <!-- Dynamically populated student view -->
+        </div>
+
+        <div class="modal-footer">
+          <button id="print-modal-btn" class="btn btn-secondary">
+            🖨️ Print Report Card
+          </button>
+          <button id="edit-from-modal-btn" class="btn btn-primary">
+            ✏️ Edit Details
+          </button>
+          <button id="close-modal-footer-btn" class="btn btn-outline">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
